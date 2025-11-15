@@ -10,22 +10,27 @@
   </head>
   <h1>HAS SIDO HACKEADO</h1>
   <body>
-	  <input type="text" id="search" placeholder="Buscar video..." style="width:200px;">
-<button onclick="buscar()">Buscar</button>
+<input type="text" id="url" placeholder="Pega aquí el link de YouTube" style="width:250px;">
+<button onclick="play()">Reproducir</button>
 
-<div id="resultados"></div>
-<iframe id="player" width="320" height="180" style="margin-top:10px;" allowfullscreen></iframe>
+<br><br>
+
+<iframe id="player" width="320" height="180" allowfullscreen></iframe>
 
 <script>
-function buscar(){
-    let q = document.getElementById("search").value;
-    fetch(`https://www.youtube.com/results?search_query=${encodeURIComponent(q)}`)
-    .then(r => r.text())
-    .then(t => {
-        let id = t.match(/watch\?v=(.{11})/)[1];
-        document.getElementById("resultados").innerHTML = "Primer resultado encontrado";
-        document.getElementById("player").src = "https://www.youtube.com/embed/" + id;
-    });
+function play() {
+    const url = document.getElementById('url').value;
+
+    // Extraer ID del video automáticamente
+    const match = url.match(/v=([^&]+)/) || url.match(/youtu\.be\/([^?&]+)/);
+
+    if (!match) {
+        alert("Link inválido");
+        return;
+    }
+
+    const id = match[1];
+    document.getElementById('player').src = "https://www.youtube.com/embed/" + id;
 }
 </script>
   <div class="content">
